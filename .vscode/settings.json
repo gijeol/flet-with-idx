@@ -1,0 +1,9 @@
+{
+    // VS Code에게 터미널 실행 시 Python 환경을 자동으로 활성화하도록 지시
+    "python.terminal.activateEnvironment": true,
+    
+    // VS Code에게 인터프리터 검색 경로를 지정
+    // 이 경로는 생성한 가상 환경 내의 Python 실행 파일 경로입니다.
+    // IDX는 Linux 환경 기반이므로 .venv/bin/python 경로를 사용합니다.
+    "python.defaultInterpreterPath": "${workspaceFolder}/.venv/bin/python"
+}
