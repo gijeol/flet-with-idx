@@ -31,7 +31,7 @@
 
           if [ ! -f requirements.txt ]; then
             echo "requirements.txt not found. Creating one with flet..."
-            echo "flet" > requirements.txt
+            echo -e "flet \n flet[all]==0.28.3 \n flet-desktop" > requirements.txt
           fi
 
           # activate virtual env and install requirements
@@ -53,7 +53,7 @@
 
           if [ ! -f requirements.txt ]; then
             echo "requirements.txt not found. Creating one with flet..."
-            echo "flet" > requirements.txt
+            echo -e "flet \n flet[all]==0.28.3 \n flet-desktop" > requirements.txt
           fi
 
           # activate virtual env and install requirements
@@ -62,7 +62,7 @@
         '';
 
         # Open editors for the following files by default, if they exist:
-        default.openFiles = [ "README.md" "$MAIN_FILE" ];
+        default.openFiles = [ "$MAIN_FILE" ];
       };
     };
 
