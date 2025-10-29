@@ -2,12 +2,11 @@
 # see: https://developers.google.com/idx/guides/customize-idx-env
 { pkgs, ... }: {
   # nixpkgs channel
-  channel = "stable-23.11";
+  channel = "stable-25.05";
 
   packages = [
-    pkgs.python310
-    pkgs.python310Packages.pip
-    pkgs.jdk20
+    pkgs.python312
+    pkgs.uv
   ];
 
   # environment variables
@@ -19,9 +18,8 @@
   idx = {
     # Search for the extensions you want on https://open-vsx.org/ and use "publisher.id"
     extensions = [
+      "google.gemini-cli-vscode-ide-companion"
       "ms-python.python"
-      "ms-python.debug"
-      "ms-python.debugpy"
     ];
 
     workspace = {
@@ -29,7 +27,7 @@
       onCreate = {
         # create a python virtual environment
         create-venv = ''
-          python -m venv $VENV_DIR
+          uv venv $VENV_DIR
 
           if [ ! -f requirements.txt ]; then
             echo "requirements.txt not found. Creating one with flet..."
@@ -38,11 +36,11 @@
 
           # activate virtual env and install requirements
           source $VENV_DIR/bin/activate
-          python -m pip install -r requirements.txt
+          uv pip install -r requirements.txt
         '';
 
         # Open editors for the following files by default, if they exist:
-        default.openFiles = [ "README.md" "requirements.txt" "$MAIN_FILE" ];
+        default.openFiles = [ "$MAIN_FILE" ];
       };
 
       onStart = {
@@ -50,7 +48,7 @@
         check-venv-existence = ''
           if [ ! -d $VENV_DIR ]; then
             echo "Virtual environment not found. Creating one..."
-            python -m venv $VENV_DIR
+            uv venv $VENV_DIR
           fi
 
           if [ ! -f requirements.txt ]; then
@@ -60,11 +58,11 @@
 
           # activate virtual env and install requirements
           source $VENV_DIR/bin/activate
-          python -m pip install -r requirements.txt
+          uv pip install -r requirements.txt
         '';
 
         # Open editors for the following files by default, if they exist:
-        default.openFiles = [ "README.md" "requirements.txt" "$MAIN_FILE" ];
+        default.openFiles = [ "README.md" "$MAIN_FILE" ];
       };
     };
 
